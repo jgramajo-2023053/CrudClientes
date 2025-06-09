@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using ClienteApi.Data; // Asegúrate de usar tu namespace real
+using ClienteApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// CORS abierto a todos
+// Configurar CORS para permitir todo (puedes ajustar según necesites)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirTodo",
@@ -15,8 +15,12 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Obtener la cadena de conexión del appsettings o variables de entorno
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Registrar DbContext con la cadena de conexión
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -24,20 +28,22 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Mostrar Swagger solo en desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Muy importante
 app.UseCors("PermitirTodo");
 
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
+
 app.MapControllers();
 
-// Migraciones
+// Aplicar migraciones automáticamente al iniciar
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
