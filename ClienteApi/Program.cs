@@ -37,4 +37,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
+// Migraciones
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
+
 app.Run();
