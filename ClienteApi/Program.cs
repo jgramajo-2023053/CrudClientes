@@ -3,6 +3,10 @@ using ClienteApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Obtener el puerto desde la variable de entorno PORT (usado en Render)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.UseUrls($"http://*:{port}");
+
 // Configurar CORS para permitir todo (puedes ajustar según necesites)
 builder.Services.AddCors(options =>
 {
@@ -29,11 +33,8 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Mostrar Swagger solo en desarrollo
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("PermitirTodo");
 
