@@ -1,0 +1,11 @@
+bin/
+obj/
+*.md
+*.user
+*.suo
+*.vs/
+.vscode/
+.env
+Dockerfile
+docker-compose*
+*.log
