@@ -78,15 +78,15 @@ const Container = styled.div`
 const Content = styled.div`
   width: 100%;
   max-width: 800px;
-  background:rgb(73, 73, 73);
+  background: #313131;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10pxrgba(0, 0, 0, 0.51);
 `
 
 const Header = styled.h1`
   text-align: center;
-  color: #333;
+  color: #f1f1f1;
 `
 
 const AddButton = styled.button`

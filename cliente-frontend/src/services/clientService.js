@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'http://localhost:5240/api/cliente';
+const API = 'https://crudclientes-8owr.onrender.com/api/cliente';
 
 export const getClientes = () => axios.get(API);
 export const createCliente = (cliente) => axios.post(API, cliente);
